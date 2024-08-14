@@ -9,7 +9,6 @@ import axios from 'axios'
 import vueCookies from 'vue-cookies'
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || ''
-console.log('', axios.defaults.baseURL)
 
 const app = createApp(App)
 

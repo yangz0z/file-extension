@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config();
@@ -11,6 +12,10 @@ mongoDB();
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+app.use(cors({
+  origin: process.env.CLIENT_URL // 클라이언트 도메인 허용
+}))
 
 app.use(logger('dev'));
 app.use(express.json());
