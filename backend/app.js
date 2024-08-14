@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', indexRouter);
+app.use('/', indexRouter);
 
 //5초 타임아웃 설정
 app.use(function(req, res, next) {
