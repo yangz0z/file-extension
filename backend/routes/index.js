@@ -13,8 +13,8 @@ router.get('/', function(req, res) {
 /**
  * 확장자 목록 조회
  */
-router.get('/extension', function(req, res) {
-    Extension.find({ fixed: req.body.fixed })
+router.get('/extensions', function(req, res) {
+    Extension.find({ fixed: req.query.fixed })
     .then((ext) => {
         if (!ext) {
             return res.json({ success: false, message: '데이터가 없습니다.', data: null })
@@ -29,7 +29,7 @@ router.get('/extension', function(req, res) {
 /**
  * 커스텀 확장자 추가
  */
-router.post('/extension', function(req, res) {
+router.post('/extensions', function(req, res) {
     // 중복체크
     Extension.findOne({ value: req.body.value })
     .then((ext) => {
@@ -64,7 +64,7 @@ router.post('/extension', function(req, res) {
 /**
  * 고정 확장자 사용 전환
  */
-router.patch('/extension', function(req, res) {
+router.patch('/extensions', function(req, res) {
     Extension.updateOne({ _id: req.body._id }, { used: req.body.used })
     .then((result) => {
         // 성공
@@ -81,7 +81,7 @@ router.patch('/extension', function(req, res) {
 /**
  * 커스텀 확장자 삭제
  */
-router.delete('/extension', function(req, res) {
+router.delete('/extensions', function(req, res) {
     Extension.deleteOne({ _id: req.body._id })
     .then(() => {
         Extension.find({ fixed: false })
