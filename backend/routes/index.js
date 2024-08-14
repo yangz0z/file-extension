@@ -19,7 +19,7 @@ router.get('/extensions', function(req, res) {
         if (!ext) {
             return res.json({ success: false, message: '데이터가 없습니다.', data: null })
         }
-        return res.json({ success: true, data: ext, count: ext.length })
+        return res.status(200).json({ success: true, data: ext, count: ext.length })
     })
     .catch((err) => {
         return res.json({ success: false, message: '오류가 발생했습니다.', err })
@@ -43,17 +43,9 @@ router.post('/extensions', function(req, res) {
         }
         // 등록 가능
         const extension = new Extension(req.body)
-        console.log(extension)
         extension.save()
-            .then((saved) => {
-                Extension.find({ fixed: false })
-                .then((data) => {
-                    return res.json({ success: true, data: data, count: data.length })
-                })
-                .catch((err) => {
-                    Extension.deleteOne({ _id: saved._id })
-                    return res.json({ success: false, message: '오류가 발생했습니다.', err }) 
-                })
+            .then(() => {
+                return res.status(200).json({ success: true, message: '추가되었습니다.' })
             })
             .catch((err) => {
                 return res.json({ success: false, message: '오류가 발생했습니다.', err })
@@ -69,7 +61,7 @@ router.patch('/extensions', function(req, res) {
     .then((result) => {
         // 성공
         if (result.modifiedCount) {
-            return res.json({ success: true })
+            return res.status(200).json({ success: true })
         }
         return res.json({ success: false })
     })
@@ -81,16 +73,10 @@ router.patch('/extensions', function(req, res) {
 /**
  * 커스텀 확장자 삭제
  */
-router.delete('/extensions', function(req, res) {
-    Extension.deleteOne({ _id: req.body._id })
+router.delete('/extensions/:id', function(req, res) {
+    Extension.deleteOne({ _id: req.params.id })
     .then(() => {
-        Extension.find({ fixed: false })
-        .then((data) => {
-            return res.json({ success: true, data: data, count: data.length })
-        })
-        .catch((err) => {
-            return res.json({ success: false, message: '오류가 발생했습니다.', err }) 
-        })
+        return res.status(200).json({ success: true, message: '삭제되었습니다.' })
     })
     .catch((err) => {
         return res.json({ success: false, message: '오류가 발생했습니다.', err }) 
