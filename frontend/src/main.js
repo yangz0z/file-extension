@@ -8,7 +8,8 @@ import router from './router'
 import axios from 'axios'
 import vueCookies from 'vue-cookies'
 
-axios.defaults.baseURL = process.env.VITE_API_URL || ''
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || ''
+console.log('', axios.defaults.baseURL)
 
 const app = createApp(App)
 
