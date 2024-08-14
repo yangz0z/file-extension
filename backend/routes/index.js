@@ -5,7 +5,7 @@ var router = express.Router();
 const { Extension } = require('../models/Extension.js')
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/api', function(req, res) {
     // res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
     res.send('file-extension API')
 });
